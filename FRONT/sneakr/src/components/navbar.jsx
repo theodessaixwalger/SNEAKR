@@ -6,6 +6,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Login", path: "/login" },
+    { name: "Profil", path: "/profil"},
   ];
 
   return (
