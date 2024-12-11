@@ -6,14 +6,14 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Login", path: "/login" },
-    { name: "Profil", path: "/profil"},
+    { name: "Profil", path: "/profil" },
   ];
 
   return (
     <div className="flex justify-between items-center p-4">
       <div className="flex items-center space-x-12">
         <Link to="/" className="flex items-center">
-          <img src={UNLOCKER} alt="Logo foot unlocker" className="h-12"/>
+          <img src={UNLOCKER} alt="Logo foot unlocker" className="h-12" />
         </Link>
       </div>
 

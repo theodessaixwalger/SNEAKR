@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Facebook, Twitter, Mail } from "lucide-react";
+import { Facebook, Twitter, Mail} from "lucide-react";
+import Cookie from 'js-cookie';
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState(null);
 
   const socialIcons = [
     { icon: <Facebook size={20} />, color: "hover:text-blue-600" },
@@ -25,13 +27,14 @@ const Login = () => {
           }),
         }
       );
-      console.log("test");
       const data = await response.json();
       if (response.ok) {
+        setToken(data.jwt);
+        Cookie.set("token",data.jwt, { path: '/profil' });
         alert("Login successful!");
         window.location.href = '/';
       } else {
-        alert(data.message[0].messages[0].message);
+        alert(`Erreur : ${data.error.message}`);
       }
     } catch (error) {
       console.error("Error login:", error);
