@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, EyeOff, Facebook, Twitter, Mail } from "lucide-react";
+import { Facebook, Twitter, Mail } from "lucide-react";
 
 const Register = () => {
   const [name, setName] = useState("");

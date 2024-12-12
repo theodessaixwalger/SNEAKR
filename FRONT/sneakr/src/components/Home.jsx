@@ -1,7 +1,30 @@
+// Product.jsx
 import React, { useEffect, useState } from "react";
+import { Heart } from "lucide-react";
+import SearchBar from "./Searchbar";
 
 const Product = () => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const favIcon = (
+    <Heart size={20} className="cursor-pointer hover:text-red-500" />
+  );
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    if (term === "") {
+      setFilteredData(data);
+    } else {
+      const filtered = data.filter(
+        (product) =>
+          product.name.toLowerCase().includes(term.toLowerCase()) ||
+          product.description.toLowerCase().includes(term.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -11,8 +34,9 @@ const Product = () => {
         );
         const result = await response.json();
         setData(result.data);
+        setFilteredData(result.data);
       } catch (error) {
-        console.error("Erreur lors de la récupération des données:", error);
+        console.error("Erreur lors de la récupération des données :", error);
       }
     };
     fetchData();
@@ -29,8 +53,11 @@ const Product = () => {
       </header>
 
       <div className="container mx-auto py-8 px-4">
+        {/* Composant SearchBar */}
+        <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.map((product) => (
+          {filteredData.map((product) => (
             <div
               key={product.id}
               className="bg-white shadow-md rounded-lg overflow-hidden transform transition duration-300 hover:scale-105"
@@ -49,10 +76,11 @@ const Product = () => {
                 </h2>
               </div>
 
-              <div className="p-4 bg-gray-50 border-t border-gray-200">
-                <button className="w-full bg-black text-white py-2 rounded-md font-bold uppercase tracking-wider hover:bg-gray-800">
-                  View Details
+              <div className="p-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
+                <button className="bg-black text-white py-2 px-4 rounded-md font-bold uppercase tracking-wider hover:bg-gray-800">
+                  <a href={`/product/${product.id}`}>View Details</a>
                 </button>
+                <div>{favIcon}</div>
               </div>
             </div>
           ))}
@@ -69,4 +97,5 @@ const Product = () => {
     </div>
   );
 };
+
 export default Product;
