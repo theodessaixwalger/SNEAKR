@@ -35,7 +35,6 @@ const Profil = () => {
   const handleSave = async () => {
     try {
       const token = Cookies.get("token");
-      // Utiliser userId dans l'URL de la requête
       const response = await fetch(
         `http://localhost:1337/api/users/${userId}`,
         {
@@ -52,6 +51,7 @@ const Profil = () => {
       }
       const updatedData = await response.json();
       setUserData(updatedData);
+      window.location.href = '/profil';
       alert("Edit successful!");
     } catch (err) {
       setError(err.message);

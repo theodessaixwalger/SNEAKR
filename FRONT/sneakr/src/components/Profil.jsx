@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; 
-
-import Cookies from "js-cookie";
+import { Link, useNavigate } from "react-router-dom"; 
+import Cookie from "js-cookie";
 
 const Profil = () => {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = Cookies.get("token");
+        const token = Cookie.get("token");
 
         if (!token) {
-          window.location.href = "/login"
+          navigate("/login");
           throw new Error("Token non trouvé dans les cookies");
         }
 
@@ -36,7 +36,14 @@ const Profil = () => {
       }
     };
     fetchUserData();
-  }, []);
+  }, [navigate]);
+
+  const handleDisconnect = () => {
+    Cookie.remove("token", { path: '/profil' })
+    window.location.href = '/login';
+    alert("Disconnect");
+  };
+
   if (error) return <div>Erreur : {error}</div>;
 
   return (
@@ -54,11 +61,19 @@ const Profil = () => {
             <span className="font-semibold text-gray-800">Email :</span>{" "}
             {userData.email}
           </p>
-          <Link to="/profiledit">
-            <button className="w-full bg-black text-white py-2 mt-4 rounded-md font-bold uppercase tracking-wider hover:bg-gray-800">
-              Edit Profile
+          <div className="flex space-x-4">
+            <Link to="/profiledit" className="w-full">
+              <button className="w-full bg-black text-white py-2 mt-4 rounded-md font-bold uppercase tracking-wider hover:bg-gray-800">
+                Edit Profile
+              </button>
+            </Link>
+            <button 
+              onClick={handleDisconnect}
+              className="w-full bg-red-600 text-white py-2 mt-4 rounded-md font-bold uppercase tracking-wider hover:bg-red-700"
+            >
+              Déconnexion
             </button>
-          </Link>
+          </div>
         </div>
       ) : (
         <p className="text-gray-500 italic">
