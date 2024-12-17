@@ -1,4 +1,3 @@
-// Product.jsx
 import React, { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
 import SearchBar from "./Searchbar";
@@ -53,7 +52,6 @@ const Product = () => {
       </header>
 
       <div className="container mx-auto py-8 px-4">
-        {/* Composant SearchBar */}
         <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -78,7 +76,7 @@ const Product = () => {
 
               <div className="p-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
                 <button className="bg-black text-white py-2 px-4 rounded-md font-bold uppercase tracking-wider hover:bg-gray-800">
-                  <a href={`/product/${product.id}`}>View Details</a>
+                  <a href={`/product/${product.documentId}`}>View Details</a>
                 </button>
                 <div>{favIcon}</div>
               </div>
