@@ -9,7 +9,7 @@ const SearchBar = ({ searchTerm, onSearch }) => {
           placeholder="Rechercher un produit..."
           value={searchTerm}
           onChange={(e) => onSearch(e.target.value)}
-          className="w-full p-2 pl-4 pr-10 rounded border border-gray-300"
+          className="w-10/12 p-2 pl-4 pr-10 rounded border border-gray-300"
         />
         {searchTerm && (
           <button
